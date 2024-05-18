@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "version": "1.0",
+    "name": "Tab Saver",
+    "description": "Tab Saver is your ultimate tool for streamlined tab management in Chrome. Organize, save, and quickly access your tabs with ease, ensuring a clutter-free browsing experience.",
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": "icon.png"
+    },
+    "permissions": [
+        "tabs"
+    ]
+}
