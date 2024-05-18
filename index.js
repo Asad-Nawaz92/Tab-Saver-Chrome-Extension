@@ -1,10 +1,8 @@
 let myLeads = [];
 const inputEl = document.getElementById("input-el");
-const saveBtn = document.getElementById("save-btn");
 const ulEl = document.getElementById("ul-el");
 const deleteBtn = document.getElementById("delete-btn");
 const tabBtn = document.getElementById("tab-btn");
-
 const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
 if (leadsFromLocalStorage) {
   myLeads = leadsFromLocalStorage;
@@ -44,17 +42,6 @@ function render(leads) {
 deleteBtn.addEventListener("click", function () {
   localStorage.clear();
   myLeads = [];
-  render(myLeads);
-});
-
-saveBtn.addEventListener("click", function () {
-  if (inputEl.value.trim() === "") {
-    alert("Please provide a link for saving.");
-    return;
-  }
-  myLeads.push(inputEl.value);
-  inputEl.value = "";
-  localStorage.setItem("myLeads", JSON.stringify(myLeads));
   render(myLeads);
 });
 
