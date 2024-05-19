@@ -3,7 +3,9 @@ const inputEl = document.getElementById("input-el");
 const ulEl = document.getElementById("ul-el");
 const deleteBtn = document.getElementById("delete-btn");
 const tabBtn = document.getElementById("tab-btn");
+const inputTabBtn = document.getElementById("input-tab-btn");
 const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
+
 if (leadsFromLocalStorage) {
   myLeads = leadsFromLocalStorage;
   render(myLeads);
@@ -17,17 +19,33 @@ tabBtn.addEventListener("click", function () {
   });
 });
 
+inputTabBtn.addEventListener("click", function () {
+  const inputVal = inputEl.value;
+  if (inputVal) {
+    myLeads.push(inputVal);
+    inputEl.value = "";
+    localStorage.setItem("myLeads", JSON.stringify(myLeads));
+    render(myLeads);
+  }
+});
+
+deleteBtn.addEventListener("click", function () {
+  localStorage.clear();
+  myLeads = [];
+  render(myLeads);
+});
+
 function render(leads) {
   let listItems = "";
   for (let i = 0; i < leads.length; i++) {
     listItems += `
-      <li>
-        <a target='_blank' href='${leads[i]}'>
-          ${leads[i]}
-        </a>
-        <button class="del-btn">DELETE</button>
-      </li>
-    `;
+            <li>
+                <a target='_blank' href='${leads[i]}'>
+                    ${leads[i]}
+                </a>
+                <button class="del-btn">DELETE</button>
+            </li>
+        `;
   }
   ulEl.innerHTML = listItems;
 
@@ -38,12 +56,6 @@ function render(leads) {
     });
   }
 }
-
-deleteBtn.addEventListener("click", function () {
-  localStorage.clear();
-  myLeads = [];
-  render(myLeads);
-});
 
 function deleteSingleLead(index) {
   myLeads.splice(index, 1);
