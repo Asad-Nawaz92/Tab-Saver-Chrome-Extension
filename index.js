@@ -13,19 +13,27 @@ if (leadsFromLocalStorage) {
 
 tabBtn.addEventListener("click", function () {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    myLeads.push(tabs[0].url);
-    localStorage.setItem("myLeads", JSON.stringify(myLeads));
-    render(myLeads);
+    const url = tabs[0].url;
+    if (!myLeads.includes(url)) {
+      myLeads.push(url);
+      localStorage.setItem("myLeads", JSON.stringify(myLeads));
+      render(myLeads);
+    }
   });
 });
 
 inputTabBtn.addEventListener("click", function () {
-  const inputVal = inputEl.value;
+  let inputVal = inputEl.value.trim();
   if (inputVal) {
-    myLeads.push(inputVal);
-    inputEl.value = "";
-    localStorage.setItem("myLeads", JSON.stringify(myLeads));
-    render(myLeads);
+    if (!/^https?:\/\//i.test(inputVal)) {
+      inputVal = "http://" + inputVal;
+    }
+    if (!myLeads.includes(inputVal)) {
+      myLeads.push(inputVal);
+      inputEl.value = "";
+      localStorage.setItem("myLeads", JSON.stringify(myLeads));
+      render(myLeads);
+    }
   }
 });
 
